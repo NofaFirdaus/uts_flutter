@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:uts_flutter/app/controllers/login_controller.dart';
+import 'package:uts_flutter/app/models/user.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key,});
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-    final LoginController _loginController = LoginController();
+    final LoginController _loginController = LoginController(user: User());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 TextButton(onPressed: (){Navigator.pushNamed(context, '/Register');}, child: Text('Register')),
-                ElevatedButton(onPressed: () {_loginController.login();}, child: const Text('Submit')),
+                ElevatedButton(onPressed: () {_loginController.login(context);}, child: const Text('Submit')),
             ],
           ),
         ),

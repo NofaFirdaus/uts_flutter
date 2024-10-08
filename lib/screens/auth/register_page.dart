@@ -58,21 +58,21 @@ class _RegisterPage extends State<RegisterPage> {
                   controller: _registerPage.passwordController,
                   decoration: const InputDecoration(
                       labelText: 'Password', border: OutlineInputBorder()),
-                  obscureText: true,
+                  obscureText: false,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      _registerPage.register();
-                    },
-                    child: const Text('Submit')),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context, '/');
                     },
-                    child: const Text('Login'))
+                    child: const Text('Login')),
+                ElevatedButton(
+                    onPressed: () {
+                      _registerPage.register();
+                    },
+                    child: const Text('Submit'))
               ],
             ),
           ),
