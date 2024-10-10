@@ -1,4 +1,5 @@
 void main (){
-  String name  ='Nofa Firdaus';
-  print(name.length);
+  final  String k ;
+  String ? a ;
+  print(a);
 }
