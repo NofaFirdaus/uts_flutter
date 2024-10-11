@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:uts_flutter/app/models/user.dart';
+import 'package:uts_flutter/app/services/database.dart';
 import 'package:uts_flutter/app/services/regex_register.dart';
 
 class RegisterController {
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  void register(){
+  void register(Database database, BuildContext context){
     final RegexRegister regexRegister = RegexRegister(); 
     String username = usernameController.text;
     String name = nameController.text;
@@ -22,7 +24,9 @@ class RegisterController {
 
     print('${validatorName} ${validatorUsername}  ${validatorEmail}  ${validatorPassword}');
     if (validatorName && validatorEmail && validatorUsername && validatorPassword) {
-       User(name: name,username: username,email: email ,password: password);
+      database.create(User(name: name,username: username,email: email ,password: password));
+
+      
     }else{
       print('Gagal Total');
     }

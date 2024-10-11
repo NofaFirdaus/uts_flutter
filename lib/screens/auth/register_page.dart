@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:uts_flutter/app/controllers/register_controller.dart';
+import 'package:uts_flutter/app/services/database.dart';
 import 'package:uts_flutter/app/services/regex_register.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final Database user;
+  RegisterPage({super.key,required this.user });
   @override
   _RegisterPage createState() => _RegisterPage();
 }
 
 class _RegisterPage extends State<RegisterPage> {
   RegexRegister _regex = RegexRegister();
-
   bool _isErrorName = false;
   bool _isErrorUsername = false;
   bool _isErrorEmail = false;
@@ -106,7 +107,7 @@ class _RegisterPage extends State<RegisterPage> {
                 controller: _registerPage.passwordController,
                    onChanged: (value) {
                   setState(() {
-                    _isErrorPassword= _regex.regexPassword.hasMatch(value);
+                    _isErrorPassword= _regex.regexPassword.hasMatch(value) && value.length > 7;
                   });
                 },
                  decoration: InputDecoration(
@@ -132,7 +133,7 @@ class _RegisterPage extends State<RegisterPage> {
                   child: const Text('Login')),
               ElevatedButton(
                   onPressed: () {
-                    _registerPage.register();
+                    _registerPage.register(widget.user, context);
                   },
                   child: const Text('Submit'))
             ],
