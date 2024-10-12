@@ -10,10 +10,6 @@ class LoginController {
     String username = usernameController.text;
     String password = passwordController.text;
 
-    // if (database.authenticate(username, password)) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => HomePage()));
-    // }
     User? user = database.authenticate(username, password);
     user != null
         ? Navigator.push(

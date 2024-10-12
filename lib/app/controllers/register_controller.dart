@@ -24,7 +24,8 @@ class RegisterController {
 
     print('${validatorName} ${validatorUsername}  ${validatorEmail}  ${validatorPassword}');
     if (validatorName && validatorEmail && validatorUsername && validatorPassword) {
-      database.create(User(name: name,username: username,email: email ,password: password));
+    database.create(User(name: name,username: username,email: email ,password: password));
+    Navigator.pop(context);
 
       
     }else{
