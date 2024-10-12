@@ -14,8 +14,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final LoginController _loginController = LoginController();
 
-  bool _isErrorUsername = false;
+  bool _isErrorUsernameOrEmail = false;
   bool _isErrorPassword = false;
+  bool _isVisible = true;
   final FocusNode _focusNode1 = FocusNode();
   final FocusNode _focusNode2 = FocusNode();
 
@@ -72,15 +73,16 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   onChanged: (value) {
                     setState(() {
-                      _isErrorUsername = value.isNotEmpty;
+                      _isErrorUsernameOrEmail = value.isNotEmpty;
                     });
                   },
-                  controller: _loginController.usernameController,
+                  controller: _loginController.usernameOrUsernameController,
                   decoration: InputDecoration(
-                      errorText:
-                          _isErrorUsername ? null : 'Username harus diisi.',
+                      errorText: _isErrorUsernameOrEmail
+                          ? null
+                          : 'Username harus diisi.',
                       labelStyle: TextStyle(
-                          color: _isErrorPassword
+                          color: _isErrorUsernameOrEmail
                               ? CustomColors.portGore900
                               : null,
                           fontWeight: FontWeight.w600,
@@ -103,6 +105,20 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   controller: _loginController.passwordController,
                   decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isVisible = !_isVisible;
+                            });
+                          },
+                          icon: Icon(
+                            _isVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: _isErrorPassword
+                                ? CustomColors.portGore900
+                                : Colors.red[900],
+                          )),
                       labelStyle: TextStyle(
                           color: _isErrorPassword
                               ? CustomColors.portGore900
@@ -113,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                           _isErrorPassword ? null : 'Password harus diisi.',
                       labelText: 'Password',
                       border: const OutlineInputBorder()),
-                  obscureText: true,
+                  obscureText: _isVisible,
                   style: TextStyle(
                       color: _isErrorPassword ? Colors.black : Colors.red[900]),
                 ),
@@ -134,20 +150,24 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 16,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: !_isErrorPassword || !_isErrorUsername
-                            ? CustomColors.portGore900.withOpacity(0.6)
-                            : null,
-                      ),
-                      onPressed: () {
-                        _loginController.login(widget.user, context);
-                      },
-                      child: const Text('Sign Up',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16))),
+                AbsorbPointer(
+                  absorbing: !_isErrorPassword || !_isErrorUsernameOrEmail,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              !_isErrorPassword || !_isErrorUsernameOrEmail
+                                  ? CustomColors.portGore900.withOpacity(0.6)
+                                  : null,
+                        ),
+                        onPressed: () {
+                          _loginController.login(widget.user, context);
+                        },
+                        child: const Text('Sign Up',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16))),
+                  ),
                 ),
                 const SizedBox(
                   height: 24,

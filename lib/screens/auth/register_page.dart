@@ -32,6 +32,7 @@ class _RegisterPage extends State<RegisterPage> {
   bool _isErrorUsername = false;
   bool _isErrorEmail = false;
   bool _isErrorPassword = false;
+  bool _isVisible = true;
   final RegisterController _registerPage = RegisterController();
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class _RegisterPage extends State<RegisterPage> {
                 const Row(
                   children: [
                     Text(
-                      "Register your account",
+                      "Register account",
                       style: TextStyle(
                           fontSize: 28.0,
                           fontWeight: FontWeight.w600,
@@ -103,7 +104,8 @@ class _RegisterPage extends State<RegisterPage> {
                   controller: _registerPage.usernameController,
                   onChanged: (value) {
                     setState(() {
-                      _isErrorUsername = _regex.regexUsername.hasMatch(value);
+                      _isErrorUsername = _regex.regexUsername.hasMatch(value) &&
+                          widget.user.validatorUsername(value);
                     });
                   },
                   decoration: InputDecoration(
@@ -132,7 +134,8 @@ class _RegisterPage extends State<RegisterPage> {
                   controller: _registerPage.emailController,
                   onChanged: (value) {
                     setState(() {
-                      _isErrorEmail = _regex.regexEmail.hasMatch(value);
+                      _isErrorEmail = _regex.regexEmail.hasMatch(value) &&
+                          widget.user.validatorEmail(value);
                     });
                   },
                   decoration: InputDecoration(
@@ -163,6 +166,20 @@ class _RegisterPage extends State<RegisterPage> {
                     });
                   },
                   decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isVisible = !_isVisible;
+                            });
+                          },
+                          icon: Icon(
+                            _isVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: _isErrorPassword
+                                ? CustomColors.portGore900
+                                : Colors.red[900],
+                          )),
                       errorText:
                           _isErrorPassword ? null : 'Password tidak valid.',
                       labelText: 'Password',
@@ -175,11 +192,11 @@ class _RegisterPage extends State<RegisterPage> {
                       border: const OutlineInputBorder()),
                   style: TextStyle(
                       color: _isErrorPassword ? Colors.black : Colors.red[900]),
-                  obscureText: false,
+                  obscureText: _isVisible,
                 ),
                 Row(
                   children: [
-                    Text('Sudah memiliki akun ? '),
+                    const Text('Sudah memiliki akun ? '),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
