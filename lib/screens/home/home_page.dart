@@ -200,6 +200,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     TextButton(
                                       onPressed: () {
+                                        Navigator.pop(context);
                                         Navigator.pushReplacementNamed(context, '/');
                                       },
                                       child: const Text('Iya',
