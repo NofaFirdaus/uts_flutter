@@ -49,7 +49,7 @@ class _RegisterPage extends State<RegisterPage> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
-            child:screenSize.width >=765 && orientation == Orientation.landscape ?  Row(
+            child:screenSize.width >=765 || orientation == Orientation.landscape ?  Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset(
@@ -250,7 +250,7 @@ class _RegisterPage extends State<RegisterPage> {
                   width: 200,
                 ),
                 SizedBox(
-                  height: 24,
+                          height: screenSize.height * 0.03,
                 ),
                 Container(
                   child: Column(
