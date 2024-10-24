@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Profil'),
         backgroundColor: backgroundColor,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
